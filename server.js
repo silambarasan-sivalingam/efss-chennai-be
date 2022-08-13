@@ -12,10 +12,10 @@ import { fileURLToPath } from 'url'
 import path from 'path'
 
 //security
-import helmet from 'helmet'
-import xss from 'xss-clean'
-import mongoSanitize from 'express-mongo-sanitize'
-import rateLimiter from 'express-rate-limit'
+// import helmet from 'helmet'
+// import xss from 'xss-clean'
+// import mongoSanitize from 'express-mongo-sanitize'
+// import rateLimiter from 'express-rate-limit'
 
 //db and authenticateUser
 import connectDB from './db/connect.js'
@@ -45,7 +45,7 @@ app.get('/api/v1', (req, res)=>{
 } )
 
 app.use('/api/v1/auth', authRouters)
-app.use('/api/v1/client', clientsRouter)
+app.use('/api/v1/clients', authenticateUser, clientsRouter)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
