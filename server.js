@@ -1,8 +1,10 @@
 import express from 'express'
 const app = express()
-
+import cors from 'cors'
+app.use(cors());
 import dotenv from 'dotenv'
 dotenv.config()
+
 
 import 'express-async-errors'
 import morgan from 'morgan'
@@ -11,7 +13,7 @@ import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import path from 'path'
 
-//security
+// security
 // import helmet from 'helmet'
 // import xss from 'xss-clean'
 // import mongoSanitize from 'express-mongo-sanitize'
