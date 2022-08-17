@@ -13,17 +13,17 @@ import moment from 'moment'
 const createClient = async (req, res) => {
 
     const { clientName, 
-            ContactNo, 
+            contactNo, 
             address,
             fasNo,
             } = req.body
 
-    if(!clientName || !ContactNo || !address || !fasNo  ) {
+    if(!clientName || !contactNo || !address || !fasNo  ) {
         throw new BadRequestError('Please provide all values')
     }
-    req.body.createdBy = req.user.userId
+    req.body.createdBy = '62f756f59e173856202d58ca'
     const client = await Client.create(req.body)
-    res.status(StatusCodes.CREATED).json({ job })
+    res.status(StatusCodes.CREATED).json({ client })
 
     }
 
@@ -32,7 +32,7 @@ const getAllClients = async (req, res) => {
     const { status, alertMonth, sort, search } = req.query
 
     const queryObject = {
-        createdBy: req.user.userId,
+        createdBy: '62f756f59e173856202d58ca'
     }
 
     if (status && status !== 'all') {
@@ -42,7 +42,7 @@ const getAllClients = async (req, res) => {
         queryObject.alertMonth = alertMonth
       }
       if (search) {
-        queryObject.position = { $regex: search, $options: 'i' }
+        queryObject.clientName = { $regex: search, $options: 'i' }
       }
 
       // NO AWAIT
@@ -59,10 +59,10 @@ const getAllClients = async (req, res) => {
     result = result.sort('createdAt')
   }
   if (sort === 'a-z') {
-    result = result.sort('position')
+    result = result.sort('clientName')
   }
   if (sort === 'z-a') {
-    result = result.sort('-position')
+    result = result.sort('-clientName')
   }
 
   //
@@ -86,12 +86,12 @@ const updateClient = async(req, res) => {
     const { id: clientId} = req.params
 
     const { clientName, 
-        ContactNo, 
+        contactNo, 
         address,
         fasNo,
         } = req.body
 
-    if(!clientName || !ContactNo || !address || !fasNo  ) {
+    if(!clientName || !contactNo || !address || !fasNo  ) {
         throw new BadRequestError('Please provide all values')
     }
 
@@ -125,7 +125,7 @@ const deleteClient = async (req, res) => {
 
 const showStats = async (req, res) => {
     let stats = await Client.aggregate([
-      { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
+      { $match: { createdBy: mongoose.Types.ObjectId('62f756f59e173856202d58ca') } },
       { $group: { _id: '$status', count: { $sum: 1 } } },
     ])
     stats = stats.reduce((acc, curr) => {
@@ -141,7 +141,7 @@ const showStats = async (req, res) => {
     }
   
     let monthlyApplications = await Client.aggregate([
-      { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
+      { $match: { createdBy: mongoose.Types.ObjectId('62f756f59e173856202d58ca') } },
       {
         $group: {
           _id: { year: { $year: '$createdAt' }, month: { $month: '$createdAt' } },

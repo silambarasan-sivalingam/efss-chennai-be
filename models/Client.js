@@ -8,7 +8,7 @@ const ClientSchema = new mongoose.Schema({
         maxlength: 100,
       },
 
-    ContactNo: {
+    contactNo: {
         type: String,
         required: [true, "Please provide contact number"],
         maxlength: 20,

@@ -45,7 +45,7 @@ app.get('/api/v1', (req, res)=>{
 } )
 
 app.use('/api/v1/auth', authRouters)
-app.use('/api/v1/clients', authenticateUser, clientsRouter)
+app.use('/api/v1/clients',clientsRouter)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
